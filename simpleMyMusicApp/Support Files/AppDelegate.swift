@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         let center = UNUserNotificationCenter.current()
         center.delegate = self.notifHelper
+        
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         return true
     }
     
@@ -50,6 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {}
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        
+        try? AVAudioSession.sharedInstance().setActive(true)
+        
         self.timer?.invalidate()
         secondFromStart = 0
     }

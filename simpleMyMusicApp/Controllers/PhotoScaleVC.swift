@@ -78,8 +78,6 @@ class PhotoScaleVC: UIViewController {
         asset.loadValuesAsynchronously(forKeys: keys) {
             DispatchQueue.main.async {
                 self.avPlayer.insert(AVPlayerItem(asset: asset), after: nil)
-                try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: [])
-                try! AVAudioSession.sharedInstance().setActive(true)
             }
         }
         

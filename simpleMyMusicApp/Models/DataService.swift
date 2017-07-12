@@ -12,8 +12,8 @@ import Firebase
 
 
 enum ConectionDB {
-    static let connect = Database.database().reference(fromURL: "https://simplemymusicapp.firebaseio.com/")
-    static let storage = Storage.storage().reference(forURL: "gs://simplemymusicapp.appspot.com")
+    static let connect = Database.database().reference(fromURL: "https://pushmymusic-36c60.firebaseio.com/")
+    static let storage = Storage.storage().reference(forURL: "gs://pushmymusic-36c60.appspot.com")
 }
 
 class DataService {
