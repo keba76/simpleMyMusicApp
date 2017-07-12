@@ -255,10 +255,31 @@ class PhotoScaleVC: UIViewController {
     }
     
     func play() {
+        let mpic = MPNowPlayingInfoCenter.default()
+       
         if self.avPlayer.rate > 0 {
             self.avPlayer.pause()
+            mpic.nowPlayingInfo = [
+                MPMediaItemPropertyTitle: "\(AudioViewModelController.share.viewModel(at: self.index!.row)!.title)",
+                MPMediaItemPropertyArtwork : MPMediaItemArtwork(boundsSize: self.imageView!.image!.size, requestHandler: { size -> UIImage in
+                    return self.imageView!.image!
+                }),
+                MPMediaItemPropertyPlaybackDuration: CMTimeGetSeconds(self.avPlayer.currentItem!.duration),
+                MPNowPlayingInfoPropertyElapsedPlaybackTime: CMTimeGetSeconds(self.avPlayer.currentTime()),
+                MPNowPlayingInfoPropertyPlaybackRate: 1
+            ]
+            
             self.playBtn.setImage(UIImage(named: "pause"), for: .normal)
         } else {
+            mpic.nowPlayingInfo = [
+                MPMediaItemPropertyTitle: "\(AudioViewModelController.share.viewModel(at: self.index!.row)!.title)",
+                MPMediaItemPropertyArtwork : MPMediaItemArtwork(boundsSize: self.imageView!.image!.size, requestHandler: { size -> UIImage in
+                    return self.imageView!.image!
+                }),
+                MPMediaItemPropertyPlaybackDuration: CMTimeGetSeconds(self.avPlayer.currentItem!.duration),
+                MPNowPlayingInfoPropertyElapsedPlaybackTime: CMTimeGetSeconds(self.avPlayer.currentTime()),
+                MPNowPlayingInfoPropertyPlaybackRate: 1
+            ]
             self.avPlayer.play()
             self.playBtn.setImage(UIImage(named: "play"), for: .normal)
         }
