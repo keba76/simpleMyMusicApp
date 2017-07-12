@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SDWebImage
 
 class PostCell: UICollectionViewCell {
     
@@ -21,11 +22,11 @@ class PostCell: UICollectionViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var favoriteBtn: DOFavoriteButton!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.cornerRadius = 5.0
     }
+    
     
     func configure(_ viewModel: AudioViewModel) {
         self.postID = viewModel.postKey

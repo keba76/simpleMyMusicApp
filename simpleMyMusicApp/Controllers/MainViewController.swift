@@ -31,11 +31,19 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     var data: SomeData?
     
+    var reload = false
+    fileprivate let imageLoadQueue = OperationQueue()
+    fileprivate var imageLoadOperations = [IndexPath: ImageLoadOperation]()
+    
     var animationController: AnimationController = AnimationController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        if #available(iOS 10.0, *) {
+            collectionView?.prefetchDataSource = self
+        }
         self.navigationItem.title = "Sounds Of Nature"
         
         let rectProgress = CGRect(x: view.bounds.width/2 - 20.0, y: (view.bounds.height)/2 - 20.0, width: 40.0, height: 40.0)
@@ -61,10 +69,22 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
                     strongSelf.showError(title, message: NSLocalizedString("Can't retrieve contacts.", comment: "Can't retrieve contacts."))
                 }
             } else {
-                self?.viewProgress?.stopAnimating()
-                self?.viewProgress?.removeFromSuperview()
+                strongSelf.viewProgress?.stopAnimating()
+                strongSelf.viewProgress?.removeFromSuperview()
                 
-                self?.collectionView.reloadData()
+                if strongSelf.reload {
+                    if let indexPath = self?.collectionView?.indexPathsForVisibleItems {
+                        strongSelf.reload = false
+                        strongSelf.collectionView.performBatchUpdates({
+                            UIView.setAnimationsEnabled(false)
+                            strongSelf.collectionView.reloadItems(at: indexPath)
+                            UIView.setAnimationsEnabled(true)
+                        }, completion: { ok in strongSelf.reload = true })
+                    }
+                } else {
+                    strongSelf.collectionView.reloadData()
+                    strongSelf.reload = true
+                }
             }
         }
     }
@@ -86,7 +106,18 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             cell.configure(viewModel)
             cell.index = indexPath
             cell.delegate = self
-            cell.pic.sd_setImage(with: viewModel.images)
+            
+            if let imageLoadOperation = imageLoadOperations[indexPath],
+                let image = imageLoadOperation.image {
+                cell.pic.image = image
+            } else {
+                let imageLoadOperation = ImageLoadOperation(url: viewModel.images)
+                imageLoadOperation.completionHandler = { (image) in
+                    cell.pic.image = image
+                }
+                imageLoadQueue.addOperation(imageLoadOperation)
+                imageLoadOperations[indexPath] = imageLoadOperation
+            }
         }
         return cell
     }
@@ -112,16 +143,35 @@ extension MainViewController: CollectionViewCellDelegate {
     }
 }
 
-
 extension MainViewController: UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        for index in indexPaths {
-            guard let data = AudioViewModelController.share.viewModel(at: index.row) else { continue }
-            SDWebImagePrefetcher.shared().prefetchURLs([data.images])
+        
+        for indexPath in indexPaths {
+            if let _ = imageLoadOperations[indexPath] { return }
+            if let viewModel = AudioViewModelController.share.viewModel(at: (indexPath as NSIndexPath).row) {
+                let imageLoadOperation = ImageLoadOperation(url: viewModel.images)
+                imageLoadQueue.addOperation(imageLoadOperation)
+                imageLoadOperations[indexPath] = imageLoadOperation
+            }
         }
     }
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            guard let imageLoadOperation = imageLoadOperations[indexPath] else { return }
+            imageLoadOperation.cancel()
+            imageLoadOperations.removeValue(forKey: indexPath)
+        }
+    }
+        func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+            if self.reload {
+            guard let imageLoadOperation = imageLoadOperations[indexPath] else { return }
+            imageLoadOperation.cancel()
+            imageLoadOperations.removeValue(forKey: indexPath)
+            }
+        }
 }
+
 
 extension MainViewController: UIViewControllerTransitioningDelegate {
     
@@ -164,4 +214,15 @@ extension MainViewController: OffserCell {
         }
     }
 }
+
+//extension UICollectionView {
+//    func reloadItems(index: [IndexPath], animation: Bool) {
+//        if !animation {
+//            CATransaction.begin()
+//            CATransaction.setDisableActions(true)
+//            self.reloadItems(at: index)
+//            if !animation { CATransaction.commit() }
+//        }
+//    }
+//}
 

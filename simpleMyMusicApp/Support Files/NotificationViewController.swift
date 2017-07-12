@@ -60,7 +60,7 @@ class MyUserNotificationHelper : NSObject {
         print("creating notification")
         
         // need trigger
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         // need content
         let content = UNMutableNotificationContent()
         content.title = "A moment of attention!"

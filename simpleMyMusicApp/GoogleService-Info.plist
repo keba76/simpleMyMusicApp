@@ -21,7 +21,7 @@
 	<key>PROJECT_ID</key>
 	<string>simplemymusicapp</string>
 	<key>STORAGE_BUCKET</key>
-	<string>pushmymusic-36c60.appspot.com</string>
+	<string>simplemymusicapp.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -35,6 +35,6 @@
 	<key>GOOGLE_APP_ID</key>
 	<string>1:797947303316:ios:dfccbd4bf0ba3199</string>
 	<key>DATABASE_URL</key>
-	<string>https://pushmymusic-36c60.firebaseio.com</string>
+	<string>https://simplemymusicapp.firebaseio.com</string>
 </dict>
 </plist>

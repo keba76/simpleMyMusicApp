@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F1A76EF1F168737005CED68 /* ImageLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1A76EE1F168737005CED68 /* ImageLoadOperation.swift */; };
 		5F2A3D301F13319F0026A7AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2A3D2F1F13319F0026A7AF /* AppDelegate.swift */; };
 		5F2A3D351F13319F0026A7AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F2A3D331F13319F0026A7AF /* Main.storyboard */; };
 		5F2A3D371F13319F0026A7AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F2A3D361F13319F0026A7AF /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		496AC1259DF9488BB53F5418 /* Pods_simpleMyMusicApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simpleMyMusicApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F1A76EE1F168737005CED68 /* ImageLoadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoadOperation.swift; sourceTree = "<group>"; };
 		5F2A3D2C1F13319F0026A7AF /* simpleMyMusicApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simpleMyMusicApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F2A3D2F1F13319F0026A7AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F2A3D341F13319F0026A7AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			children = (
 				5F900F051F134D6E00DE75FC /* ProgressIndicators */,
 				5F2A3D2F1F13319F0026A7AF /* AppDelegate.swift */,
+				5F1A76EE1F168737005CED68 /* ImageLoadOperation.swift */,
 				5F900F271F134E9F00DE75FC /* DOFavoriteButton.swift */,
 				5F900F351F13BDDB00DE75FC /* NotificationViewController.swift */,
 			);
@@ -385,6 +388,7 @@
 				5F900F321F134F9E00DE75FC /* AudioViewModel.swift in Sources */,
 				5F900F171F134E2800DE75FC /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
 				5F900F2E1F134F4100DE75FC /* Post.swift in Sources */,
+				5F1A76EF1F168737005CED68 /* ImageLoadOperation.swift in Sources */,
 				5F900F001F134CC900DE75FC /* PhotoScaleVC.swift in Sources */,
 				5F900F021F134D0700DE75FC /* PostCell.swift in Sources */,
 				5F900F441F14260C00DE75FC /* OffserCell.swift in Sources */,

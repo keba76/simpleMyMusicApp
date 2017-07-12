@@ -279,6 +279,7 @@ class PhotoScaleVC: UIViewController {
     }
     
     func previousTrack(btn: CustomBtn) {
+        self.previousBtn.isEnabled = false
         avPlayer.pause()
         self.playBtn.setImage(UIImage(named: "pause"), for: .normal)
         self.timeRemainingLabel.isHidden = true
@@ -302,13 +303,14 @@ class PhotoScaleVC: UIViewController {
                 self.avPlayer.insert(item, after: self.avPlayer.currentItem)
                 self.avPlayer.advanceToNextItem()
                 self.avPlayer.play()
+                self.previousBtn.isEnabled = true
             }
         }
         self.index = indexPath
     }
     
-    
     func nextTrack() {
+        self.nextBtn.isEnabled = false
         self.avPlayer.pause()
         self.playBtn.setImage(UIImage(named: "pause"), for: .normal)
         self.timeRemainingLabel.isHidden = true
@@ -333,6 +335,7 @@ class PhotoScaleVC: UIViewController {
                 self.avPlayer.insert(item, after: self.avPlayer.currentItem)
                 self.avPlayer.advanceToNextItem()
                 self.avPlayer.play()
+                self.nextBtn.isEnabled = true
             }
         }
         self.index = indexPath
